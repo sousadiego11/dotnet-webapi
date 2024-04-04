@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddControllers();
-    builder.Services.AddDbContext<ProductContext>(opt => opt.UseInMemoryDatabase("ProductsList"));
+    builder.Services.AddDbContext<StorageContext>(opt => opt.UseInMemoryDatabase("ProductsList"));
 };
 
 var app = builder.Build();

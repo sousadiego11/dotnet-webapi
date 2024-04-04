@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StorageWebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9eba732438928581ddff081dc3592c542cf8a43")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41edc8e4d51387572064bf4f0fc31f3967fcecc8")]
 [assembly: System.Reflection.AssemblyProductAttribute("StorageWebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StorageWebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

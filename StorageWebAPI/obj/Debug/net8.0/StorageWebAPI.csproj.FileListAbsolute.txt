@@ -72,3 +72,4 @@ C:\Users\pwdie\Downloads\projects\storage-dotnet-webapi\StorageWebAPI\bin\Debug\
 C:\Users\pwdie\Downloads\projects\storage-dotnet-webapi\StorageWebAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\pwdie\Downloads\projects\storage-dotnet-webapi\StorageWebAPI\bin\Debug\net8.0\StorageWebAPI.Contracts.dll
 C:\Users\pwdie\Downloads\projects\storage-dotnet-webapi\StorageWebAPI\bin\Debug\net8.0\StorageWebAPI.Contracts.pdb
+C:\Users\pwdie\Downloads\projects\storage-dotnet-webapi\StorageWebAPI\obj\Debug\net8.0\StorageWebAPI.sourcelink.json

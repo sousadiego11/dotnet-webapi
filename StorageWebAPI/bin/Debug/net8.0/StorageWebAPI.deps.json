@@ -12,6 +12,7 @@
           "Microsoft.EntityFrameworkCore": "8.0.4",
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.4",
+          "Microsoft.Extensions.Logging": "8.0.0",
           "StorageWebAPI.Contracts": "1.0.0",
           "Swashbuckle.AspNetCore": "6.4.0"
         },

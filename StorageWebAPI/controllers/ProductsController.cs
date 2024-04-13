@@ -15,7 +15,7 @@ namespace StorageWebAPI.controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Product>> PostProduct(Product product) {
             try {
-                _context!.Products.Add(product);
+                _context.Products.Add(product);
                 await _context.SaveChangesAsync();
     
                 return CreatedAtAction(nameof(PostProduct), new { id = product.Id }, product);

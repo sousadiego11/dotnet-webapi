@@ -25,5 +25,24 @@ namespace StorageWebAPI.controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpGet("{productId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Product>> GetProduct(long productId) {
+            try {
+                var product = await _context.Products.FindAsync(productId);
+                if (product == null) {
+                    return NotFound();
+                } else {
+                    return product;
+                }
+            }
+            catch (Exception exception) {
+                logger.LogError("[GetProduct]: {Message}", exception.Message);
+                return StatusCode(500);
+            }
+        }
     }
 }

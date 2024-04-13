@@ -6,13 +6,13 @@ namespace StorageWebAPI.controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController : ControllerBase
-    {
-        private readonly StorageContext? _context;
-        private readonly ILogger logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger("ProductController");
+    public class ProductsController(StorageContext context) : ControllerBase {
+        private readonly StorageContext _context = context;
+        private readonly ILogger logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger("ProductsController");
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Product>> PostProduct(Product product) {
             try {
                 _context!.Products.Add(product);

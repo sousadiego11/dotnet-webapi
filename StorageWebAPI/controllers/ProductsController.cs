@@ -4,7 +4,7 @@ using StorageWebAPI.Contracts.Models;
 using StorageWebAPI.Services;
 using StorageWebAPI.Mapping;
 
-namespace StorageWebAPI.controllers
+namespace StorageWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

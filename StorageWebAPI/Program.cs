@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StorageWebAPI.Database;
+using StorageWebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddSwaggerGen();
     builder.Services.AddDbContext<StorageContext>(opt => opt.UseInMemoryDatabase("ProductsList"));
     builder.Services.AddRouting(opts => opts.LowercaseUrls = true);
+    builder.Services.AddTransient<ProductsService>();
 };
 
 var app = builder.Build();

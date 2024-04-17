@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using StorageWebAPI.Models;
-using StorageWebAPI.Database;
 using StorageWebAPI.Contracts.Models;
+using StorageWebAPI.Services;
+using StorageWebAPI.Mapping;
 
 namespace StorageWebAPI.controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController(StorageContext context) : ControllerBase {
-        private readonly StorageContext _context = context;
+    public class ProductsController(ProductsService productsService) : ControllerBase {
+        private readonly ProductsService productsService = productsService;
         private readonly ILogger logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger("ProductsController");
 
         [HttpPost]
@@ -16,19 +17,10 @@ namespace StorageWebAPI.controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ProductResponse>> PostProduct(ProductRequest req) {
             try {
-                Product product = new(req.Name, req.UnitPrice, req.PricePerWeight, req.Categories);
-                _context.Products.Add(product);
-                await _context.SaveChangesAsync();
-                ProductResponse resp = new ProductResponse{
-                        Categories = product.Categories,
-                        Id = product.Id,
-                        Name = product.Name,
-                        PricePerWeight = product.PricePerWeight,
-                        UnitPrice = product.UnitPrice,
-                        CreatedAt = product.CreatedAt,
-                        UpdatedAt = product.UpdatedAt,
-                    };
+                Product product = await productsService.PostProduct(req);
+                ProductResponse resp = ProductMapping.FromDbEntityToResponse(product);
     
+                logger.LogInformation("[PostProduct]: {Message}", "Product created succesfully!");
                 return CreatedAtAction(nameof(PostProduct), new { id = product.Id }, resp);
             }
             catch (Exception exception) {
@@ -43,20 +35,10 @@ namespace StorageWebAPI.controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ProductResponse>> GetProduct(Guid productId) {
             try {
-                var product = await _context.Products.FindAsync(productId);
-                if (product == null) {
-                    return NotFound();
-                } else {
-                    return new ProductResponse{
-                        Categories = product.Categories,
-                        Id = product.Id,
-                        Name = product.Name,
-                        PricePerWeight = product.PricePerWeight,
-                        UnitPrice = product.UnitPrice,
-                        CreatedAt = product.CreatedAt,
-                        UpdatedAt = product.UpdatedAt,
-                    };
-                }
+                var product = await productsService.GetProduct(productId);
+
+                logger.LogInformation("[GetProduct]: {Message}", "Product fetched succesfully!");
+                return product == null ? NotFound() : ProductMapping.FromDbEntityToResponse(product);
             }
             catch (Exception exception) {
                 logger.LogError("[GetProduct]: {Message}", exception.Message);

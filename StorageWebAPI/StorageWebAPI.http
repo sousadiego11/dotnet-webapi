@@ -1,6 +1,20 @@
-@StorageWebAPI_HostAddress = http://localhost:5197
+@StorageWebAPI_Host = http://localhost:5197
+@ProductId = d87e2514-07b3-455e-b8c1-4b95fa2bac4a
 
 ###
-GET {{StorageWebAPI_HostAddress}}/weatherforecast/
+GET {{StorageWebAPI_Host}}/api/products/{{ProductId}}
 Accept: application/json
 
+###
+POST {{StorageWebAPI_Host}}/api/products/
+Accept: application/json
+content-type: application/json
+
+{
+  "name": "Test",
+  "unitPrice": 50.50,
+  "pricePerWeight": 19.99,
+  "categories": [
+    "Grossery"
+  ]
+}

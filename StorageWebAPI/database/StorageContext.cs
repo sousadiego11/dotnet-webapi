@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using StorageWebAPI.Contracts.models;
+using StorageWebAPI.Models;
 
 namespace StorageWebAPI.Database
 {

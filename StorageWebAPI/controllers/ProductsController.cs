@@ -9,8 +9,7 @@ namespace StorageWebAPI.controllers
     [ApiController]
     [Route("api/[controller]")]
     public class ProductsController(ProductsService productsService) : ControllerBase {
-        private readonly ProductsService productsService = productsService;
-        private readonly ILogger logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger("ProductsController");
+        private readonly ILogger _logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger("ProductsController");
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -20,11 +19,11 @@ namespace StorageWebAPI.controllers
                 Product product = await productsService.PostProduct(req);
                 ProductResponse resp = ProductMapping.FromDbEntityToResponse(product);
     
-                logger.LogInformation("[PostProduct]: {Message}", "Product created succesfully!");
+                _logger.LogInformation("[PostProduct]: {Message}", "Product created succesfully!");
                 return CreatedAtAction(nameof(PostProduct), new { id = product.Id }, resp);
             }
             catch (Exception exception) {
-                logger.LogError("[PostProduct]: {Message}", exception.Message);
+                _logger.LogError("[PostProduct]: {Message}", exception.Message);
                 return StatusCode(500);
             }
         }
@@ -37,11 +36,32 @@ namespace StorageWebAPI.controllers
             try {
                 var product = await productsService.GetProduct(productId);
 
-                logger.LogInformation("[GetProduct]: {Message}", "Product fetched succesfully!");
+                _logger.LogInformation("[GetProduct]: {Message}", "Product fetched succesfully!");
                 return product == null ? NotFound() : ProductMapping.FromDbEntityToResponse(product);
             }
             catch (Exception exception) {
-                logger.LogError("[GetProduct]: {Message}", exception.Message);
+                _logger.LogError("[GetProduct]: {Message}", exception.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("{productId:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ProductResponse>> RemoveProduct(Guid productId) {
+            try {
+                var product = await productsService.GetProduct(productId);
+                if (product != null) {
+                    productsService.RemoveProduct(productId);
+                    _logger.LogInformation("[RemoveProduct]: {Message}", "Product removed succesfully!");
+                    return NoContent();
+                } else {
+                    return NotFound();
+                }
+            }
+            catch (Exception exception) {
+                _logger.LogError("[RemoveProduct]: {Message}", exception.Message);
                 return StatusCode(500);
             }
         }

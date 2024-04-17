@@ -19,6 +19,11 @@ namespace StorageWebAPI.Services
         public async Task<Product?> GetProduct(Guid productId) {
             return await _context.Products.FindAsync(productId);
         }
+
+        public void RemoveProduct(Guid productId) {
+            _context.Products.Remove(_context.Products.Single(p => p.Id == productId));
+            _context.SaveChanges();
+        }
         
     }
 }
